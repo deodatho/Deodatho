@@ -8,7 +8,7 @@
 - 💻 Trabalho com: **Python**, **JavaScript**, **HTML**, **CSS** e **ReactJS**
 - 🌐 Interesso-me por redes: **Cisco Packet Tracer**, **NS-3**
 - 🚀 Sempre aprendendo e explorando novas tecnologias
-- 📫 Como entrar em contato: [deodatho29@gmail.com] ou pelo [LinkedIn](https://www.linkedin.com/in/deodatho-mateus)
+- 📫 Como entrar em contato: [Email](deodatho29@gmail.com) ou pelo [LinkedIn](https://www.linkedin.com/in/deodatho-mateus)
 
 ---
 
