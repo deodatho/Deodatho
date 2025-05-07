@@ -1,0 +1,44 @@
+name: Atualizar CodeStats
+
+on:
+  schedule:
+    - cron: '0 3 * * *'  # Roda diariamente às 03:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Instalar dependências
+      run: pip install requests
+
+    - name: Gerar resumo do CodeStats
+      run: python codestats_summary.py
+
+    - name: Atualizar README.md
+      run: |
+        START="<!--START_CODESTATS-->"
+        END="<!--END_CODESTATS-->"
+        CONTENT=$(<codestats.md)
+        awk -v s="$START" -v e="$END" -v r="$CONTENT" '
+          BEGIN {print_code=1}
+          $0 ~ s {print; print r; print_code=0; next}
+          $0 ~ e {print_code=1}
+          print_code {print}
+        ' README.md > temp.md && mv temp.md README.md
+
+    - name: Commit e push
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add README.md
+        git commit -m "Atualiza estatísticas do CodeStats"
+        git push
