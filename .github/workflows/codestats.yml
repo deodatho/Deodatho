@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '0 3 * * *'  # Roda diariamente às 03:00 UTC
   workflow_dispatch:
+permissions:
+  contents: write 
 
 jobs:
   update-readme:
