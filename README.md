@@ -34,9 +34,16 @@
 
 ---
 
+## 📈 Estatísticas de Código
+
+Veja minhas estatísticas no [Code::Stats](https://codestats.net/users/Deodatho)
+
+---
+
 ### 🌐 Vamos nos conectar?
 
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/deodatho-mateus-95b8022b4)
 [![Gmail](https://img.shields.io/badge/-Email-D14836?style=flat&logo=gmail&logoColor=white)](mailto:deodatho29@gmail.com)
 
-
+<!--START_CODESTATS-->
+<!--END_CODESTATS-->
