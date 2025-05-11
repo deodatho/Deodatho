@@ -46,10 +46,10 @@ Veja minhas estatísticas no [Code::Stats](https://codestats.net/users/Deodatho)
 [![Gmail](https://img.shields.io/badge/-Email-D14836?style=flat&logo=gmail&logoColor=white)](mailto:deodatho29@gmail.com)
 
 <!--START_CODESTATS-->
-## 📊 Code::Stats Summary (2025-05-10)
+## 📊 Code::Stats Summary (2025-05-11)
 
 - **Python**: 579 XP
-- **JSON**: 12 XP
+- **JSON**: 16 XP
 
-**Total XP:** 591 XP
+**Total XP:** 595 XP
 <!--END_CODESTATS-->
