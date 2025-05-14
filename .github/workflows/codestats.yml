@@ -4,8 +4,9 @@ on:
   schedule:
     - cron: '0 3 * * *'  # Roda diariamente às 03:00 UTC
   workflow_dispatch:
+
 permissions:
-  contents: write 
+  contents: write
 
 jobs:
   update-readme:
@@ -13,6 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Obtém todo o histórico de commits
 
     - name: Setup Python
       uses: actions/setup-python@v5
@@ -39,8 +42,16 @@ jobs:
 
     - name: Commit e push
       run: |
+        # Configuração do Git
         git config --global user.name "github-actions[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add README.md
-        git commit -m "Atualiza estatísticas do CodeStats"
-        git push
+        
+        # Sincroniza com o remote
+        git pull --rebase origin main
+        
+        # Verifica se houve mudanças
+        git diff --quiet README.md || {
+          git add README.md
+          git commit -m "Atualiza estatísticas do CodeStats [skip ci]"
+          git push origin main
+        }
