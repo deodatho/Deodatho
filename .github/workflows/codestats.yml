@@ -2,7 +2,7 @@ name: Atualizar CodeStats
 
 on:
   schedule:
-    - cron: '0 3 * * *'  # Roda diariamente às 03:00 UTC
+    - cron: '0 3 * * *'  # Executa diariamente às 03:00 UTC
   workflow_dispatch:
 
 permissions:
@@ -13,9 +13,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Limpar workspace
+      run: |
+        git status
+        git reset --hard
+        git clean -fd
+
     - uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # Obtém todo o histórico de commits
+        fetch-depth: 0  # Obtém todo o histórico
 
     - name: Setup Python
       uses: actions/setup-python@v5
@@ -40,18 +46,26 @@ jobs:
           print_code {print}
         ' README.md > temp.md && mv temp.md README.md
 
-    - name: Commit e push
+    - name: Commit e push seguro
       run: |
         # Configuração do Git
         git config --global user.name "github-actions[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         
-        # Sincroniza com o remote
-        git pull --rebase origin main
+        # Autenticação e sincronização
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git fetch origin main
+        git reset --hard origin/main
         
-        # Verifica se houve mudanças
-        git diff --quiet README.md || {
+        # Verifica mudanças antes de commitar
+        if ! git diff --exit-code README.md >/dev/null; then
           git add README.md
           git commit -m "Atualiza estatísticas do CodeStats [skip ci]"
-          git push origin main
-        }
+          
+          # Tenta push com fallback
+          for i in {1..3}; do
+            git push origin main && break || sleep 5
+          done
+        else
+          echo "Nenhuma alteração detectada no README.md"
+        fi
